@@ -2,7 +2,6 @@
 title: 'How to use the ADG canvas'
 description: 'Creating a desktop application that draws flat washers with the ADG canvas and Lua'
 ---
-
 This tutorial will show a really basic use case just to highlight some key
 aspects of the ADG canvas. For this purpose, the Lua bindings will be used for
 providing a more interactive (i.e. fun) experience. Nothing prevents you from

@@ -15,7 +15,14 @@ const Adg = ({ Component, pageProps }: AppProps) => {
       </Head>
       <ul>
         <li><Link href="/"><a>Home</a></Link></li>
+        <li><Link href="/screenshots"><a>Screenshots and hints</a></Link></li>
+        <li><Link href="/download"><a>Download and install</a></Link></li>
         <li><Link href="/tutorial"><a>Tutorial</a></Link></li>
+        <li><Link href="/history"><a>History</a></Link></li>
+        <li><Link href="/design"><a>Design overview</a></Link></li>
+        <li><Link href="/technical"><a>Technical details</a></Link></li>
+        <li><Link href="/bindings"><a>Language bindings</a></Link></li>
+        <li><Link href="/demo"><a>Demo</a></Link></li>
       </ul>
       <main className={styles.main}>
         <Component {...pageProps}/>

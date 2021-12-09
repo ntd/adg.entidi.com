@@ -2,7 +2,6 @@
 title: 'ADG cairo canvas'
 description: 'What is the ADG canvas, why it has been developed and how should be used'
 ---
-
 The ADG library (Automatic Drawing Generation) is a set of functions focused on
 automating the drawing of mechanical parts.
 
