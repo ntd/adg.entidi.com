@@ -4,7 +4,7 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import remarkHtml from 'remark-html'
 
-export const getFromMarkdown = (slug: string, fields: Array<string> = []) => {
+const getFromMarkdown = (slug: string, fields: Array<string> = []) => {
   const fullPath = path.join(process.cwd(), 'markdown', `${slug}.md`)
   const gm: { [key: string]: any } = matter(fs.readFileSync(fullPath, 'utf8'))
 
@@ -20,7 +20,21 @@ export const getFromMarkdown = (slug: string, fields: Array<string> = []) => {
   return items
 }
 
-export const markdownToHtml = async (markdown: string) => {
+const markdownToHtml = async (markdown: string) => {
   const html = await remark().use(remarkHtml).process(markdown)
   return html.toString()
+}
+
+export const dataFromMarkdown = async (url: string) => {
+  const slug = path.basename(url, '.tsx')
+  const data = getFromMarkdown(slug, [
+    'title',
+    'description',
+    'content',
+  ])
+  return {
+      ...data,
+      slug: slug,
+      html: await markdownToHtml(data.content || ''),
+  }
 }
