@@ -14,9 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-pre {
-  padding: 2ex;
-  background: #272822;
-  color: #ddd;
-}
