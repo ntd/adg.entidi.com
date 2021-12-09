@@ -4,8 +4,11 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import remarkHtml from 'remark-html'
 
+
+export const MARKDOWN_FOLDER = path.join(process.cwd(), 'markdown')
+
 const getFromMarkdown = (slug: string, fields: Array<string> = []) => {
-  const fullPath = path.join(process.cwd(), 'markdown', `${slug}.md`)
+  const fullPath = path.join(MARKDOWN_FOLDER, `${slug}.md`)
   const gm: { [key: string]: any } = matter(fs.readFileSync(fullPath, 'utf8'))
 
   // Ensure only the minimal needed data is exposed
