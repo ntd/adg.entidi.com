@@ -1,9 +1,9 @@
 import type { GetStaticProps } from 'next'
+import { dataFromSlug } from '../lib/api'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
-import { dataFromMarkdown } from '../lib/api'
 
-const Home = (props: { [key: string]: string }) =>
+const HomePage = (props: { [key: string]: string }) =>
   <div>
     <div className={styles.grid}>
       <Link href="/tutorial">
@@ -20,7 +20,7 @@ const Home = (props: { [key: string]: string }) =>
   </div>
 
 export const getStaticProps: GetStaticProps = async (context) => ({
-  props: await dataFromMarkdown(import.meta.url),
+  props: await dataFromSlug('index'),
 })
 
-export default Home
+export default HomePage

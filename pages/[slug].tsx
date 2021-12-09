@@ -1,5 +1,5 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
-import { MARKDOWN_FOLDER, dataFromMarkdown } from '../lib/api'
+import { MARKDOWN_FOLDER, dataFromSlug } from '../lib/api'
 import fs from 'fs'
 import path from 'path'
 
@@ -20,7 +20,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => ({
-  props: await dataFromMarkdown(context?.params?.slug as string)
+  props: await dataFromSlug(context?.params?.slug as string)
 })
 
 export default Page

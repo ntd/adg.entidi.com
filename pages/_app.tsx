@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/monokai.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'

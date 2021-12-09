@@ -1,43 +1,40 @@
 import fs from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import remarkHtml from 'remark-html'
+import {unified} from 'unified'
+import remarkParse from 'remark-parse'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkRehype from 'remark-rehype'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeStringify from 'rehype-stringify'
+// js-yaml does not support import yet
+const yaml = require('js-yaml');
 
 
 export const MARKDOWN_FOLDER = path.join(process.cwd(), 'markdown')
 
-const getFromMarkdown = (slug: string, fields: Array<string> = []) => {
+const fetchDataFromMarkdown = async (slug: string) => {
   const fullPath = path.join(MARKDOWN_FOLDER, `${slug}.md`)
-  const gm: { [key: string]: any } = matter(fs.readFileSync(fullPath, 'utf8'))
+  const contents = fs.readFileSync(fullPath, 'utf8')
 
-  // Ensure only the minimal needed data is exposed
-  const items: { [key: string]: any } = {}
-  fields.forEach((field) => {
-    if (field in gm) {
-      items[field] = gm[field]
-    } else if (field in gm.data) {
-      items[field] = gm.data[field]
-    }
-  })
-  return items
+  let data: { [key: string]: string } = {}
+  const html = await unified()
+    .use(remarkParse)
+    .use(remarkFrontmatter, ['yaml'])
+    .use(() => (tree) => {
+      if ('value' in tree.children[0]) {
+        data = yaml.load(tree.children[0].value as string)
+      }
+    })
+    .use(remarkRehype)
+    .use(rehypeHighlight)
+    .use(rehypeStringify)
+    .process(contents)
+  // Integrate YAML data with some field
+  data.slug = slug
+  data.html = html.toString()
+  return data
 }
 
-const markdownToHtml = async (markdown: string) => {
-  const html = await remark().use(remarkHtml).process(markdown)
-  return html.toString()
-}
-
-export const dataFromMarkdown = async (url: string) => {
-  const slug = path.basename(url, '.tsx')
-  const data = getFromMarkdown(slug, [
-    'title',
-    'description',
-    'content',
-  ])
-  return {
-      ...data,
-      slug: slug,
-      html: await markdownToHtml(data.content || ''),
-  }
+export const dataFromSlug = async (slug: string) => {
+  return await fetchDataFromMarkdown(slug)
 }
