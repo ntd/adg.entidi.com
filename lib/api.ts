@@ -14,7 +14,7 @@ import { visit } from 'unist-util-visit'
 const yaml = require('js-yaml');
 
 
-export const MARKDOWN_FOLDER = path.join(process.cwd(), 'markdown')
+const MARKDOWN_FOLDER = path.join(process.cwd(), 'markdown')
 
 const highlighter: string = (code: string, lang?: string) => {
   return hljs.highlight(code, { language: lang }).value
@@ -55,6 +55,14 @@ const fetchDataFromMarkdown = async (slug: string) => {
   data.slug = slug
   data.html = html.toString()
   return data
+}
+
+export const getSlugs: string[] = () => {
+  const slugs: string[] = []
+  fs.readdirSync(MARKDOWN_FOLDER).forEach(file => {
+    slugs.push(path.basename(file, '.md'))
+  })
+  return slugs
 }
 
 export const dataFromSlug = async (slug: string) => {
