@@ -36,7 +36,13 @@ const fetchDataFromMarkdown = async (slug: string) => {
     })
     .use(remarkRehype)
     .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
+    .use(rehypeAutolinkHeadings, {
+      content: {
+        type: 'element',
+        tagName: 'img',
+        properties: { src: '/img/link-45deg.svg', width: 48, height: 48, alt: 'Permalink' },
+      },
+    })
     .use(() => (tree) => {
       visit(tree, 'element', (node, _, parent) => {
         if (parent?.tagName != 'pre' || node.tagName != 'code' || node.children[0]?.type != 'text') {

@@ -1,0 +1,104 @@
+@import 'custom';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
+
+nav {
+  @extend .navbar, .navbar-light, .bg-light;
+  div {
+    @extend .container-fluid;
+    span:nth-of-type(1) {
+      > button {
+        @extend .navbar-toggler;
+        span {
+          @extend .navbar-toggler-icon;
+        }
+      }
+      > a {
+        @extend .navbar-brand;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px #fff, -1px -1px 2px #fff;
+        img {
+          margin-left: 1rem;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    span:nth-of-type(2) {
+      @extend .navbar-text;
+    }
+  }
+}
+.wrapper > div {
+  @extend .container-fluid;
+  > div {
+    @extend .row;
+    aside {
+      @extend .col-3;
+      ul {
+        @extend .nav, .nav-pills, .flex-column;
+        margin: 1rem;
+        padding: 0;
+        a {
+          @extend .nav-link;
+          margin-right: 3rem;
+        }
+        a.active {
+          position: relative;
+          border-radius: 0;
+        }
+        a.active::after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 100%;
+          border-color: transparent $primary;
+          border-style: solid;
+          border-width: 22px 0 22px 22px;
+          width: 0;
+          height: 0;
+        }
+      }
+    }
+    main {
+      @extend .col-9;
+      padding: 1rem;
+      .highlights {
+        @extend .text-end;
+        margin-bottom: 1rem;
+        a {
+          @extend .btn, .btn-info;
+          border-radius: 1rem;
+          margin: 1rem 0.5rem;
+          padding: 1rem 2rem;
+          font-size: 120%;
+        }
+      }
+      h2 > a, h3 > a, h4 > a {
+        font-family: $font-family-base;
+        font-size: 12px;
+        img {
+          vertical-align: baseline;
+          margin-right: 0.25rem;
+          margin-bottom: -12px;
+          opacity: 0.6;
+        }
+      }
+      pre code {
+        font-size: 110%;
+      }
+    }
+  }
+}
+footer {
+  @extend .bg-light;
+  padding: 1rem 0;
+  text-align: center;
+  a {
+    margin-right: 2rem;
+    img {
+      margin: 0 0.25rem 0 0.5rem;
+    }
+  }
+}
