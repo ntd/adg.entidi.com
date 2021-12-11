@@ -33,7 +33,7 @@ const Adg = ({ Component, pageProps }: AppProps) => {
               <Link href="/">
                 <a>
                   <img src="/img/adg-logo.png" alt="ADG canvs" width="48" height="48"/>
-                  ADG cairo canvas
+                  <b>ADG cairo canvas</b>
                 </a>
               </Link>
             </span>
