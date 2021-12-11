@@ -12,7 +12,7 @@ nav {
         vertical-align: middle;
       }
       > button {
-        @extend .navbar-toggler;
+        @extend .navbar-toggler, .d-inline-block, .d-lg-none;
         span {
           @extend .navbar-toggler-icon;
         }
@@ -36,7 +36,7 @@ nav {
   > div {
     @extend .row;
     aside {
-      @extend .col-3;
+      @extend .col-12, .col-lg-4, .d-lg-block;
       ul {
         @extend .nav, .nav-pills, .flex-column;
         margin: 1rem;
@@ -51,7 +51,7 @@ nav {
       }
     }
     main {
-      @extend .col-9;
+      @extend .col-12, .col-lg-8;
       padding: 1rem;
       .highlights {
         @extend .text-end;
@@ -73,6 +73,11 @@ nav {
           margin-bottom: -12px;
           opacity: 0.6;
         }
+      }
+      p img {
+        @extend .img-fluid;
+        display: block;
+        margin: 0 auto;
       }
     }
   }

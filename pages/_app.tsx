@@ -2,9 +2,9 @@ import '../styles/adg.scss'
 import 'highlight.js/styles/monokai.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 let current_slug: string
 
@@ -15,6 +15,9 @@ const MenuLink = (props) =>
   </li>
 
 const Adg = ({ Component, pageProps }: AppProps) => {
+  useEffect(() => {
+      import('bootstrap/js/dist/collapse')
+  }, [])
   current_slug = pageProps.slug == 'index' ? '' : pageProps.slug
   return (
     <div className="wrapper">
@@ -27,7 +30,7 @@ const Adg = ({ Component, pageProps }: AppProps) => {
         <nav>
           <div>
             <span>
-              <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+              <button type="button" data-bs-toggle="collapse" data-bs-target="#Navigation" aria-controls="Navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span/>
               </button>
               <Link href="/">
@@ -43,7 +46,7 @@ const Adg = ({ Component, pageProps }: AppProps) => {
       </header>
       <div>
         <div>
-          <aside>
+          <aside id="Navigation" className="collapse">
             <ul>
               <MenuLink slug="" title="The ADG canvas"/>
               <MenuLink slug="screenshots" title="Screenshots and hints"/>
