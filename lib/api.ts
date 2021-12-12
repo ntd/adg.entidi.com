@@ -6,65 +6,76 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkRehype from 'remark-rehype'
 import hljs from 'highlight.js'
 import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeAutolinkHeadings, { Options as AutolinkOptions } from 'rehype-autolink-headings'
 import rehypeStringify from 'rehype-stringify'
-import { visit } from 'unist-util-visit'
+import { visit, Parent } from 'unist-util-visit'
+import { VFile } from 'vfile'
+import { ElementContent } from 'hast'
 
 // js-yaml does not support import yet
-const yaml = require('js-yaml');
+const yaml = require('js-yaml')
 
 
+const AUTOLINK_OPTIONS: AutolinkOptions = {
+  content: <ElementContent> {
+    type: 'element',
+    tagName: 'img',
+    properties: { src: '/img/link-45deg.svg', width: 48, height: 48, alt: 'Permalink' },
+    children: [],
+  },
+}
 const MARKDOWN_FOLDER = path.join(process.cwd(), 'markdown')
 
-const highlighter: string = (code: string, lang?: string) => {
-  return hljs.highlight(code, { language: lang }).value
-}
+
+const parseYAML = () =>
+  (tree: Parent, file: VFile) => {
+    const node: { [key: string]: any } = tree.children[0]
+    if ('value' in node) {
+      file.data = yaml.load(node.value)
+    }
+  }
+
+const highlightCode = (code: string, lang: string) =>
+  hljs.highlight(code, { language: lang }).value as string
+
+const enhanceCodeBlocks = () =>
+  (tree: Parent) => {
+    visit(tree, 'element', (node: Parent, index: number, parent: Parent) => {
+      if (parent?.tagName != 'pre' || node.tagName != 'code' || node.children[0]?.type != 'text') {
+        return
+      }
+      const child = node.children[0]
+      const lang = node.properties.className[0].substring(9)
+      node.properties.className.push('hljs')
+      child.type = 'raw'
+      child.value = highlightCode(child.value, lang)
+    })
+  }
 
 const fetchDataFromMarkdown = async (slug: string) => {
-  const fullPath = path.join(MARKDOWN_FOLDER, `${slug}.md`)
-  const contents = fs.readFileSync(fullPath, 'utf8')
+  const file = path.join(MARKDOWN_FOLDER, `${slug}.md`)
 
-  let data: { [key: string]: string } = {}
   const html = await unified()
     .use(remarkParse)
-    .use(remarkFrontmatter, ['yaml'])
-    .use(() => (tree) => {
-      // Parse and save the initial YAML
-      if ('value' in tree.children[0]) {
-        data = yaml.load(tree.children[0].value as string)
-      }
-    })
+    .use(remarkFrontmatter, [ 'yaml' ])
+    .use(parseYAML)
     .use(remarkRehype)
     .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings, {
-      content: {
-        type: 'element',
-        tagName: 'img',
-        properties: { src: '/img/link-45deg.svg', width: 48, height: 48, alt: 'Permalink' },
-      },
-    })
-    .use(() => (tree) => {
-      visit(tree, 'element', (node, _, parent) => {
-        if (parent?.tagName != 'pre' || node.tagName != 'code' || node.children[0]?.type != 'text') {
-          return
-        }
-        const child = node.children[0]
-        const lang = node.properties.className[0].substring(9)
-        node.properties.className.push('hljs')
-        child.type = 'raw'
-        child.value = highlighter(child.value, lang)
-      })
-    })
+    .use(rehypeAutolinkHeadings, AUTOLINK_OPTIONS)
+    .use(enhanceCodeBlocks)
     .use(rehypeStringify, { allowDangerousHtml: true })
-    .process(contents)
-  // Integrate YAML data with some field
-  data.slug = slug
-  data.html = html.toString()
-  return data
+    .process(fs.readFileSync(file, 'utf8'))
+
+  // Integrate YAML data with `slug` and `html`
+  return {
+    ...html.data,
+    slug: slug,
+    html: html.toString(),
+  }
 }
 
-export const getSlugs: string[] = () => {
-  const slugs: string[] = []
+export const getSlugs = () => {
+  const slugs: Array<string> = []
   fs.readdirSync(MARKDOWN_FOLDER).forEach(file => {
     slugs.push(path.basename(file, '.md'))
   })

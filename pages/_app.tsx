@@ -6,9 +6,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
+type MenuProps = {
+    slug: string;
+    title: string;
+}
+
+
 let current_slug: string
 
-const MenuLink = (props) =>
+
+const MenuLink = (props: MenuProps) =>
   <li>
     <Link href={"/" + props.slug}>
     <a className={(props.slug == current_slug ? 'active' : '')}>{props.title}</a></Link>
