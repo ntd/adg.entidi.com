@@ -7,6 +7,7 @@ import parseYAML from './parse-yaml'
 import remarkRehype from 'remark-rehype'
 import autolinkHeaders from './autolink-headers'
 import enhanceCodeBlocks from './enhance-code-blocks'
+import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeStringify from 'rehype-stringify'
 
 
@@ -23,6 +24,7 @@ const fetchDataFromMarkdown = async (slug: string) => {
     .use(remarkRehype)
     .use(autolinkHeaders)
     .use(enhanceCodeBlocks)
+    .use(rehypePresetMinify)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(fs.readFileSync(file, 'utf8'))
 
