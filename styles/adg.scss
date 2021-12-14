@@ -53,6 +53,14 @@ nav {
     main {
       @extend .col-12, .col-lg-8;
       padding: 1rem;
+      .error {
+        text-align: center;
+        margin-top: 6rem;
+        p {
+          font-size: $h2-font-size;
+          font-weight: 300;
+        }
+      }
       .highlights {
         @extend .text-end;
         margin-bottom: 1rem;
