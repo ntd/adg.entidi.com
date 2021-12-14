@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
+    "deploy": "rsync -avhz --delete out/ cappa:/var/www/adg.entidi.com/",
     "start": "next start",
     "lint": "next lint"
   },
