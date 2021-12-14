@@ -30,8 +30,8 @@ const Adg = ({ Component, pageProps }: AppProps) => {
     <div className="wrapper">
       <Head>
         <title>{pageProps.title}</title>
-        <meta name="description" content="{pageProps.description}" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content={pageProps.description}/>
+        <link rel="icon" href="/favicon.ico"/>
       </Head>
       <header>
         <nav>
