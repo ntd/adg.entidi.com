@@ -1,16 +1,19 @@
 ---
 title: 'How to use the ADG canvas'
-description: 'Creating a desktop application that draws flat washers with the ADG canvas and Lua'
+description: 'Creating an ADG-based desktop application that draws flat washers from a dataset using the Lua programming language'
 ---
-This tutorial will show a really basic use case just to highlight some key
-aspects of the ADG canvas. For this purpose, the Lua bindings will be used for
+This tutorial shows a really basic use case just to highlight some key aspects
+of the ADG canvas. For this purpose, the Lua bindings have been used for
 providing a more interactive (i.e. fun) experience. Nothing prevents you from
 using any other programming language available.
 
 ## Initialization
 
 Supposing the ADG canvas is already installed on your system, to be able to use
-it under Lua, you must ensure you have installed the Lgi dynamic bindings too.
+it under [Lua](https://www.lua.org), you must ensure you have installed the
+[LGI dynamic Lua bindings](https://github.com/pavouk/lgi/). This also makes
+any GObject introspection based library available to Lua, opening a whole set
+of possibilities.
 
 Let's start coding a new script by placing some boilerplate stuff that pulls in
 some required module.

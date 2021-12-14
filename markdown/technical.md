@@ -2,36 +2,39 @@
 title: 'Technical details'
 description: 'What kind of software technologies have been leveraged and the rationale behind these decisions'
 ---
-The project grew up around cairo and the GObject library: the ADG canvas is
-developed in plain C using the object-oriented approach supplied by GObject.
-This does not mean the final application must be developed in C tough. Care has
-been taken in order to have a project easily bindingable for higher level
-languages. This idea is shared among all with the GNOME project: provide a
-common low-level base from where a set of bindings for higher level languages
-(above all the garbage-collected ones) can be implemented, so the end-user
-applications can be developed by using any of those languages.
+The project grew up around cairo and the GObject library. But although the ADG
+canvas is developed in plain C using the object-oriented approach supplied by
+GObject, this does not mean that the final application must be developed in C.
+Care has been taken in order to have an easily bindingable project, so it can
+be consumed from higher level languages.
 
-adg-lua is an example that shows how ADG can be easily accessed from the Lua
-language.
+This simple idea is shared throughout the whole GNOME ecosystem, that is
+providing a common low-level base from where a set of bindings for higher level
+languages (above all the garbage-collected ones) can be implemented, so the
+end-user applications can be developed in any of the provided languages.
+
+[adg-lua](https://github.com/ntd/adg-lua) is an example that shows how ADG can
+be easily accessed from the Lua language.
 
 ## Using the library
+![Sample lathe drawing for a diesel nozzle](img/nozzle.png)
 
 Basically, an application based on ADG must fulfill the following tasks:
 
-* define the model
-* instantiate and settle an AdgModel derived class, that is the virtual object
+* define the model \
+  instantiate and settle an AdgModel derived class, that is the virtual object
   representing the mechanical part or whatever you need to render;
-* populate the canvas
-* stroke the model inside an AdgCanvas instance, completing the drawing with
+* populate the canvas \
+  stroke the model inside an AdgCanvas instance, completing the drawing with
   decoration entities (title block, quotes, labels, axis and whatever else
   needed);
-* customize the rendering
-* by default the ADG library provides and uses some predefined style but you
+* customize the rendering \
+  by default the ADG library provides and uses some predefined style but you
   still have the opportunity to change the way the drawing will be rendered,
   such as changing line thickness, colors, fonts, spacing, quote style,
   hatching mode and so on;
-* render to a cairo surface
-* once you have the canvas ready, just render it on a cairo surface: the ADG
+* render to a cairo surface \
+  once you have the canvas ready, just render it on a cairo surface: the ADG
   provides the AdgGtkArea facility for rendering on a GtkDrawingArea; checkout
   the list of cairo backends to know the availables options and how to use
   them.
@@ -111,17 +114,17 @@ is a matrix that, when used in multiplication, doesn't change the source.
 The rendering customization is provided throught the interaction of the
 following ADG components:
 
-* AdgStyle and derived
-* In its basic form, the style is an GObject that implements the apply()
+* `AdgStyle` and derived \
+  In its basic form, the style is an GObject that implements the apply()
   method. This function should change the passed-in cairo context to fulfill a
   customization request.
-* AdgDress
-* This is an abstraction layer to virtualize the styles. The entities will
+* `AdgDress` \
+  This is an abstraction layer to virtualize the styles. The entities will
   always refer to dresses instead of styles, allowing to do some quite advanced
   operation such as overriding a dress only in a specific branch of the entity
   hierarchy.
-* AdgEntity
-* The entities are the natural consumers of styles. They provide APIs to
+* `AdgEntity` \
+  The entities are the natural consumers of styles. They provide APIs to
   resolve dresses to styles. Above all, adg_entity_set_style() provides a way
   to override the style of a dress in a specific entity.
 
@@ -191,4 +194,5 @@ render_to_pdf(AdgCanvas *canvas)
 }
 ```
 
-You can check the `demo/adg-demo.c` source file for further examples.
+You can check the `demo/adg-demo.c` program present in the ADG sources for a more
+in-depth example.

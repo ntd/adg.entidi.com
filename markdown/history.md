@@ -1,6 +1,6 @@
 ---
 title: 'History behind the ADG'
-description: 'How the automatic drawing generation idea is far older then the ADG project itself'
+description: 'How the automatic drawing generation idea is far older than the ADG project itself: the history behind the ADG'
 ---
 The ADG development started in 2007 but the idea of automatically generate
 technical drawings from a bunch of data can be dated back to the mid-nineties.
@@ -102,7 +102,7 @@ required the port of the Hitachi protocol to the new platform but non-technical
 issues once again interfered with the application development.
 
 ## Born of ADG
-![A tool for generating technical drawings, 2007](img/adg-demo-0.6.0.png)
+![A tool for generating technical drawings, 2007](img/nozzle.png)
 
 The experience acquired while implementing the previous applications and the
 fact I wanted to prove using a LAMP platform was technically superior in every
@@ -116,9 +116,9 @@ importance.
 * These applications are rigid, quite useless outside that factory context.
 * The drawings depends on the DXF file format: no DXF, no party. If you need to
   show a drawing you need a DXF viewer, that is a not so widespread program,
-  nor a web format.
-* The drawing generation speed, although improved by the father application, is
-  damn slow.
+  and it is not a web format.
+* The drawing generation speed, although grealty improved from the father
+  application, is damn slow (a couple of seconds).
 
 In the design of the ADG I tried to address every item.
 

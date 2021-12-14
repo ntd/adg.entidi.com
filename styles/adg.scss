@@ -74,6 +74,10 @@ nav {
           opacity: 0.6;
         }
       }
+      h2 {
+        border-bottom: 1px solid #666;
+        margin: 2rem 0;
+      }
       p img {
         @extend .img-fluid;
         display: block;

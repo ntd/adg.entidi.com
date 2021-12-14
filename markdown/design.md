@@ -5,7 +5,7 @@ description: 'Advantages and disadvantages between desktop and web-based applica
 Stressing it once more, the ADG library is a tool that a custom application
 (that needs to be developed) can use.
 
-In general, applications using the ADG canvas can be split in two main
+In general, applications using the ADG canvas can be split into two main
 categories: desktop or web based. Desktop application are better suited for
 enhanced user experience while web application are stronger in data sharing and
 integration with already existing infrastrutures.

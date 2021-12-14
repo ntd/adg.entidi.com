@@ -1,15 +1,14 @@
 ---
-title: 'Demo implementation strategies'
+title: 'Implementation strategies'
 description: 'How different applications can been implemented from the same codebase using alternative strategies'
 ---
-![adg-demo 0.6.0 running on Arch linux 64](img/adg-demo-0.6.0.png)
 One of the main selling point of the ADG canvas is its extensibility. In this
 page are shown three different ways of implement the same application with
 different strategy. Any approach has different advantages and disadvantages...
 there is no universal approach so every application stack shown below does not
 try to fit everywhere.
 
-## C demo application
+## Plain C application
 
 The official ADG tarball provides an adg-demo program that shows some of the
 features of the canvas without the need of installing additional stuff. It is
@@ -58,7 +57,7 @@ the drawing code are effectively decoupled. This is a fundamental point: libadg
 does not depend on GTK, so the ADG canvas can be effectively built on headless
 server by using the `--without-gtk` option.
 
-## Lua demo application
+## Lua application
 ![Data map of the adg-demo.lua application](img/adg-lua.png)
 
 `adg-demo.lua` provides an example that shows how ADG can be easily accessed
@@ -87,7 +86,7 @@ fixed, the other actors can be easily interchanged to provide another kind of
 implementation that fulfills the same task. Turning back to the stock C demo,
 thethe only actor that changes is the Lua node substituted by a C application.
 
-## Online demo
+## Web application
 
 As stated by the feature list, the ADG canvas can be easily used in web-based
 applications. The demo described here is available online and it will be kept
@@ -111,7 +110,7 @@ following programs:
 
 * PHP and Nginx for basic HTML handling;
 * the dedicated silverstripe-adg module to integrate the adg-web.lua results
-  into the yet existing SilverStripe site;
+  into the already existing SilverStripe site;
 * Lua and adg-web.lua with piston.lua (part of the adg-lua project) for
   handling the generation of the drawing;
 * LGI bindings, to provide automatic bindings between Lua and ADG + Cairo at
@@ -123,9 +122,14 @@ server will hardly met all the above requirements.
 
 ### Deployment example
 
+The following instructions have been used on an old CentOS 5 web-server that
+does not exist anymore, so they are severely outdated. They are kept online
+though because they can still be relevant in some case, for instance to give an
+idea on how the deployment should be addressed.
+
 The online demo has been deployed on a CentOS 5 web-server, so PHP and Apache
-were yet availables as part of the LAMP stack. The platform is fairly old
-(CentOS 5 has been released on April 2007) so it has been also used for testing
+were already availables as part of the LAMP stack. The platform is fairly old
+(CentOS 5 has been released on april 2007) so it has been also used for testing
 the "adaptability" of the project on outdated systems. Without bindings the
 process would have been easy: only cairo (and consequently pixman) should have
 been updated (ADG requires at least cairo 1.7.4, released on August 2008). The
