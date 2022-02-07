@@ -64,6 +64,7 @@ const Adg = ({ Component, pageProps }: AppProps) => {
               <MenuLink slug="strategies" title="Implementation strategies"/>
               <MenuLink slug="technical" title="Technical details"/>
               <MenuLink slug="bindings" title="Language bindings"/>
+              <MenuLink slug="demo" title="Online demo"/>
             </ul>
           </aside>
           <main>

@@ -7,7 +7,7 @@ const HomePage = (props: { [key: string]: string }) =>
     <div className="highlights">
       <Link href="/tutorial"><a>Tutorial</a></Link>
       <Link href="/download"><a>Download</a></Link>
-      <a href="https://track.entidi.com/tag/adg/">Bug tracker</a>
+      <Link href="/demo"><a className="demo">Online demo</a></Link>
     </div>
     <div dangerouslySetInnerHTML={{ __html: props.html }} />
   </div>

@@ -1,6 +1,5 @@
 @import 'custom';
 @import '~bootstrap/scss/bootstrap';
-@import '~bootstrap/scss/bootstrap';
 
 nav {
   @extend .navbar, .navbar-light, .bg-light;
@@ -71,6 +70,9 @@ nav {
           padding: 1rem 2rem;
           font-size: 120%;
         }
+        a.demo {
+          @extend .btn-primary;
+        }
       }
       h2 > a, h3 > a, h4 > a {
         font-family: $font-family-base;
@@ -90,6 +92,32 @@ nav {
         @extend .img-fluid;
         display: block;
         margin: 0 auto;
+      }
+      form {
+        > div {
+          label {
+            @extend .col-8, .col-sm-3, .col-md-2, .col-form-label, .mb-2;
+            text-align: right;
+          }
+          div {
+            @extend .col-4, .col-sm-3, .col-md-2, .mb-2;
+          }
+          input {
+            @extend .form-control;
+          }
+        }
+        button {
+          @extend .btn, .btn-primary;
+        }
+        p {
+          @extend .mt-4;
+          text-align: center;
+        }
+      }
+      .modal-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
