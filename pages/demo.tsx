@@ -5,20 +5,27 @@ import { useEffect } from 'react'
 const ENDPOINT = 'http://localhost:2784/'
 
 // <input> references collector
-let inputs = {}
+let inputs: { [key: string]: HTMLInputElement } = {}
 
 
-const NumberInput = (props: { [key: string]: any }) => {
+interface NumberInputProps {
+  name: string,
+  label?: string,
+  default?: number,
+}
+
+
+const NumberInput = (props: NumberInputProps) => {
   useEffect(() => {
     if (props.default) {
-      inputs[props.name].value = props.default;
+      inputs[props.name].value = props.default.toString()
     }
   })
   return (
     <>
       <label htmlFor={props.name} >{props.label || props.name}</label>
       <div>
-        <input type="number" id="{props.name}" ref={e => { inputs[props.name] = e } }/>
+        <input type="number" id="{props.name}" ref={e => { inputs[props.name] = e! } }/>
       </div>
     </>
   )
@@ -26,16 +33,9 @@ const NumberInput = (props: { [key: string]: any }) => {
 
 
 const DemoPage = (props: { [key: string]: string }) => {
-  useEffect(async () => {
-    const Modal = (await import('bootstrap/js/dist/modal')).default
-    let modal = document.getElementById('ImageModal')
-    let bsmodal = new Modal(modal)
-
-    // Allow to close the dialog with the button
-    modal.getElementsByTagName('button')[0]
-         .addEventListener('click', (e) => {
-      bsmodal.hide()
-    })
+  useEffect(() => {
+    let modal = document.getElementById('ImageModal')!
+    let image = document.getElementById('Image')! as HTMLImageElement
 
     // Helper function to generate the endpoint URL
     const pistonUrl = (format: string): string => {
@@ -46,21 +46,29 @@ const DemoPage = (props: { [key: string]: string }) => {
       return ENDPOINT + 'piston.' + format + '?' + params.toString()
     }
 
-    // Action handlers
-    let image = document.getElementById('Image')
-    document.getElementById('PNG')
-            .addEventListener('click', (e) => {
-      image.src = pistonUrl('png')
-      bsmodal.show()
-    })
-    document.getElementById('SVG')
-            .addEventListener('click', (e) => {
-      image.src = pistonUrl('svg')
-      bsmodal.show()
-    })
-    document.getElementById('PDF')
-            .addEventListener('click', (e) => {
-      window.location = pistonUrl('pdf')
+    // Modal dialog handling
+    import('bootstrap/js/dist/modal.js').then((Modal) => {
+      let bsmodal = new Modal.default(modal)
+      // Allow to close the dialog with the button
+      modal.getElementsByTagName('button')[0]
+           .addEventListener('click', (e) => {
+        bsmodal.hide()
+      })
+      // Action handlers
+      document.getElementById('PNG')!
+              .addEventListener('click', (e) => {
+        image.src = pistonUrl('png')
+        bsmodal.show()
+      })
+      document.getElementById('SVG')!
+              .addEventListener('click', (e) => {
+        image.src = pistonUrl('svg')
+        bsmodal.show()
+      })
+      document.getElementById('PDF')!
+              .addEventListener('click', (e) => {
+        window.location.href = pistonUrl('pdf')
+      })
     })
   }, [])
   return (
@@ -118,7 +126,7 @@ const DemoPage = (props: { [key: string]: string }) => {
               <h5 className="modal-title" id="ImageLabel">Generated dynamically by adg-openresty</h5>
             </div>
             <div className="modal-body">
-              <img id="Image" src={ENDPOINT + 'piston.png'} width="1123" height="794"/>
+              <img id="Image" src={ENDPOINT + 'piston.png'} width="1123" height="794" alt="Dynamically generated drawing"/>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary">Close</button>
