@@ -7,7 +7,8 @@ const Page = (props: { [key: string]: string }) =>
   </div>
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: getSlugs().map(x => ({ params: { slug: x } })),
+  // Do not consider `index` and `demo` pages, handled separately
+  paths: getSlugs(['index', 'demo']).map(x => ({ params: { slug: x } })),
   fallback: false,
 })
 

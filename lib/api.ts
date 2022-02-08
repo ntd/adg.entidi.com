@@ -36,12 +36,12 @@ const fetchDataFromMarkdown = async (slug: string) => {
   }
 }
 
-export const getSlugs = () => {
+export const getSlugs = (except: Array<string> = []) => {
   const slugs: Array<string> = []
   fs.readdirSync(MARKDOWN_FOLDER).forEach(file => {
     slugs.push(path.basename(file, '.md'))
   })
-  return slugs
+  return slugs.filter(slug => !except.includes(slug))
 }
 
 export const dataFromSlug = async (slug: string) => {
