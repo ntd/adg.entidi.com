@@ -1,4 +1,5 @@
 import type { GetStaticProps } from 'next'
+import { dataFromSlug } from '../lib/api'
 import { useEffect } from 'react'
 
 // Where the images are generated
@@ -73,7 +74,8 @@ const DemoPage = (props: { [key: string]: string }) => {
   }, [])
   return (
     <div className="contents">
-      <form>
+      <div dangerouslySetInnerHTML={{ __html: props.html }}/>
+      <form className="mt-5">
         <div className="row mb-3">
           <NumberInput name="A" default={55} label="Length"/>
           <NumberInput name="B" default={20.6} label="Height"/>
@@ -139,9 +141,7 @@ const DemoPage = (props: { [key: string]: string }) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => ({
-  props: {
-    slug: 'demo',
-  }
+  props: await dataFromSlug('demo'),
 })
 
 export default DemoPage
