@@ -2,8 +2,10 @@ import type { GetStaticProps } from 'next'
 import { dataFromSlug } from '../lib/api'
 import { useEffect } from 'react'
 
-// Where the images are generated
-const ENDPOINT = 'http://localhost:2784/'
+// Where the drawings are generated.
+// In development, always expect adg-openresty running locally. In
+// production, try to get the endpoint URL from `.env.local`
+const ENDPOINT = process.env.NODE_ENV == 'production' && process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:2784/'
 
 // <input> references collector
 let inputs: { [key: string]: HTMLInputElement } = {}
