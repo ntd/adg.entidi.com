@@ -34,9 +34,9 @@ the needs of the moment and the production procedures to minimize the impact of
 the software on the real world. Even the grouping of the data followed the
 mechanical machinings performed on the parts.
 
-To speed up the input of ecpected (for a single part there were about 300
-values required) a family approach was used, that is a set of values identified
-by metadata that allowed to automatically fill up whole forms.
+To speed up the data input (the full definition of a single part required about
+300 values), a family approach was used, that is many sets of values could be
+entered in one shot by selecting the appropriate "traits" of the part.
 
 ![Automatic drawing generation of the body of a diesel nozzle, 1994](img/sb02.jpeg)
 
