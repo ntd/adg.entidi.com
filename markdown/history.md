@@ -108,25 +108,25 @@ The experience acquired while implementing the previous applications and the
 fact I wanted to prove using a LAMP platform was technically superior in every
 aspect brought me to the development of the ADG.
 
-These are the main issues I encountered, roughly in (my subjective) order of
-importance.
+These are the main issues I encountered in the old implementations, roughly in
+(my subjective) order of importance.
 
 * The system is not portable and it is totally based on proprietary software,
   making it a giant with feet of clay.
-* These applications are rigid, quite useless outside that factory context.
+* These applications are rigid, quite useless outside that manufactory context.
 * The drawings depends on the DXF file format: no DXF, no party. If you need to
-  show a drawing you need a DXF viewer, that is a not so widespread program,
-  and it is not a web format.
+  show a drawing you need a DXF viewer, and that is not a so widespread program,
+  and above all it is supported out of the box on the web.
 * The drawing generation speed, although grealty improved from the father
   application, is damn slow (a couple of seconds).
 
-In the design of the ADG I tried to address every item.
+In the design of the ADG I tried to solve every one of them.
 
 * The ADG library is based on GLib and cairo, two open source projects I expect
   to be around for a long time. Even the GTK support is optional.
 * The ADG project only provides the canvas for generating the drawings, not an
   application that generates a specific drawing. Great care has been taken to
-  make the project as scriptable as possible, to low the barrier for the real
+  make the project as scriptable as possible, to low the barrier for real
   application development.
 * The cairo library is able to handle different image formats. Above all, PNG
   and PDF makes the resulting drawings suitable for web applications.
@@ -135,5 +135,5 @@ In the design of the ADG I tried to address every item.
   described.
 
 The only missing thing I see in the current implementation (and this can be a
-big one, depending on your requirements) it is the missing support to the DXF
+big one, depending on your requirements) is the missing support for the DXF
 format.

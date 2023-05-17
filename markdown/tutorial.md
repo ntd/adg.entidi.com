@@ -9,14 +9,14 @@ using any other programming language available.
 
 ## Initialization
 
-Supposing the ADG canvas is already installed on your system, to be able to use
-it under [Lua](https://www.lua.org), you must ensure you have installed the
-[LGI dynamic Lua bindings](https://github.com/pavouk/lgi/). This also makes
-any GObject introspection based library available to Lua, opening a whole set
-of possibilities.
+Supposing the ADG canvas is already installed in your system, to be able to use
+it under [Lua](https://www.lua.org) you must ensure you also have installed the
+[LGI dynamic Lua bindings](https://github.com/lgi-devs/lgi/). This project
+makes any GObject introspection based library available to Lua, opening a whole
+set of possibilities.
 
-Let's start coding a new script by placing some boilerplate stuff that pulls in
-some required module.
+Let's start coding by creating a new script with some boilerplate that pulls in
+the required modules.
 
 ```lua
 local lgi   =     require 'lgi'
@@ -29,8 +29,8 @@ local Gtk   = lgi.require 'Gtk'
 ## Part data
 
 We need a set of data that univocally identifies our part. For this tutorial
-the subject will be a bare flat washer, so we need internal diameter (d),
-external diameter (D) and thickness (h). We also add some metadata for
+the subject will be a bare flat washer, so we need internal diameter (`d`),
+external diameter (`D`) and thickness (`h`). We also add some metadata for
 identification purposes.
 
 ```lua
@@ -49,14 +49,16 @@ Note: a simple part has been choosen to keep this tutorial as short as
 possible. The ADG canvas is capable of drawing much more complex parts and, in
 fact, it has been initially developed for drawing diesel nozzles.
 
-Actually we have some hardcoded data. In the real world it is expected they
-will be picked up from an external source, e.g. from a database.
-Defining the models
+Actually the data is hardcoded directly into the code. In a real world
+application it will probably be picked up from an external source, e.g. from a
+database or a web service.
 
-A model is a virtual representation in 2D of an aspect of the part. It is the
-geometrical definition of a component such as a hole, a slit or the silhouette
-of a view. By "virtual" it means it does not have color, thickness, filling or
-any other visible property.
+## Defining the models
+
+A model is the virtual representation in 2D of the part. It is the geometrical
+definition of a component such as a hole, a slit or the silhouette of a view.
+By "virtual" it means it does not have color, thickness, filling or any other
+visible property.
 
 Let's start by providing the top view of the washer, that is a couple of
 concentrical circles.
@@ -93,12 +95,12 @@ end
 As you can see, there is no hardcoded values in the above code. This can or
 cannot be important, depending on what you want to accomplish.
 
-A big chunk of the `topModel()` code is devoted to provide the named pairs.
-These can be considered as anchors that will be used by the drawing for layout
-and quote positioning.
+A big chunk of the `topModel()` code is devoted to provide the so called "named
+pairs". These can be considered as anchors that will be used later for
+positioning entities and for dimension references.
 
 Another important model is the side view, in this case a rectangle. Again, a
-couple of named pairs are defined for future reference.
+couple of named pairs are defined for future use.
 
 ```lua
 local function sideModel()
@@ -247,7 +249,7 @@ dimensions and for positioning them. This avoids the need to reuse explicit
 coordinates. Anyway, if you need to, you can still use explicit coordinates:
 the ADG tries hard to not force any workflow.
 
-A big part of the logic is dedicated to the dimensions. Indeed, on complex
+A big part of the logic is dedicated to dimensioning. Indeed, on complex
 drawings, the biggest challenge is the logic for dimension positioning. A
 proper drawing should be readable when feeded with every valid set of data.
 Sometimes also invalid or absurd sets of data need to be handled properly
@@ -269,7 +271,7 @@ For our tutorial let's start by providing a basic window that just shows the
 drawing.
 
 ```lua
-local app = Gtk.Application { application_id = 'org.adg.tutorial' }
+local app = Gtk.Application { application_id = 'com.entidi.adg' }
 function app:on_activate()
     local window = Gtk.Window {
         application = app,
@@ -282,34 +284,32 @@ app:run { arg[0], ... }
 ```
 ![Automatic drawing of a small flat washer](img/tutorial1.png)
 
-The result of the above code is shown in the first image. The whole script
-presented so far can be downloaded here. If everything is properly installed,
-it should work out of the box.
+Now our application is complete! The result of the above code is shown above.
 
-Up to now the procedure seems to be a convoluted way to produce a technical
-drawing using a programming language instead of an interactive CAD system.
-Furthermore the arbitrary subdivision of model and views added more complexity
-to the picture.
+Actually, the procedure used so far seems a convoluted way of producing a
+technical drawing using a programming language instead of an interactive CAD.
+Furthermore, the arbitrary subdivision between model and view seems to just
+add more complexity with little gain.
 
-Now let's try to change the original data set and rerun the script to see what
+But let's try to change the original data set and rerun the script to see what
 happens. For instance let's suppose to change the external diameter to 150,
 that is set D = 150. A big number has been selected in order to expose how
 substantial changes are handled by the ADG canvas.
 
 ![Automatic drawing of a big flat washer](img/tutorial1a.png)
 
-The result, shown in the second image, highlights that different things have
-happened, and not only on the D quote side.
+The resulting image highlights that different things have happened: and not
+only on the D quote side of things.
 
 The scale has been modified to better accomodate the new model but, regardless,
 the size of the decorations (such as the text, the arrows, the hatches and the
-title block) is still the same. Also the distance of the quotes from the model
-is the same. In the other side, the quote of the internal diameter has been
-moved outside the extension lines. This is because the drawing in the new scale
-do not provide enough space to contain the quote.
+title block) is still the same size as before. Also, the distance of the quotes
+from the model is the same. Furthermore, the quote of the internal diameter has
+been moved outside the extension lines. This has been done because with the new
+scale there is not enough space to draw the quote as in the previous drawing.
 
-All these changes have been automatically applied by the ADG library to keep
-the drawing as clean as possible.
+And all these changes have been automatically applied by the ADG library
+without any additional code!
 
 ## Database interface
 
@@ -319,7 +319,7 @@ of parts.
 The code is the same as the one described above but the last section. To mimic
 a database interface, we will augment the user interface logic by including a
 listbox containing all the standard washers defined by the UNI 6598. Whenever
-the user select a washer from the list, the drawing will change accordingly.
+the user select a washer from the list, the drawing is updated accordingly.
 
 ```lua
 -- Database definition
@@ -409,16 +409,20 @@ function app:on_activate()
 end
 app:run { arg[0], ... }
 ```
+
+This is a fully-functional application that allows you to browse the full set
+of UNI flat washers!
+
 ![Final application, with data browsing and drawing generation on-the-fly](img/tutorial2.png)
 
-The first chunk of code is dedicated to the database definition. In a real
+The first chunk of code is dedicated to the database definition: in a real
 application the database would probably resides on an external resource and db
-would be populated with a loop on that resource.
+would be populated with a loop on that resource. Furthermore, the user
+interface could include a search feature or any other mean to make the search
+on a big dataset easier.
 
-Furthermore, the user interface could include a search feature or any other
-mean to make the search on a big dataset easier. Although all valid points,
-this is outside the scope of this tutorial and, more in general, of the ADG
-project.
+Although all valid points, this is outside the scope of this tutorial and, more
+in general, of the ADG project.
 
 The material presented here only scratches the surface of the ADG. A more
 complex example (that did not fit a quick tutorial) is the adg-demo, a program
