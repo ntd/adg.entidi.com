@@ -1,6 +1,7 @@
 import { u } from 'unist-builder'
 import hljs from 'highlight.js'
-import { visit, Parent } from 'unist-util-visit'
+import { Parent } from 'unist'
+import { visit } from 'unist-util-visit'
 import { Element, Properties } from 'hast'
 
 

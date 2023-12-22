@@ -5,9 +5,9 @@ import Link from 'next/link'
 const HomePage = (props: { [key: string]: string }) =>
   <div className="contents">
     <div className="highlights">
-      <Link href="/tutorial"><a>Tutorial</a></Link>
-      <Link href="/download"><a>Download</a></Link>
-      <Link href="/demo"><a className="demo">Online demo</a></Link>
+      <Link href="/tutorial">Tutorial</Link>
+      <Link href="/download">Download</Link>
+      <Link href="/demo" className="demo">Online demo</Link>
     </div>
     <div dangerouslySetInnerHTML={{ __html: props.html }} />
   </div>

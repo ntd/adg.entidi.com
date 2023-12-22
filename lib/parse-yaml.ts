@@ -1,4 +1,4 @@
-import { Parent } from 'unist-util-visit'
+import { Parent } from 'unist'
 import { VFile } from 'vfile'
 import { YAML } from 'mdast'
 

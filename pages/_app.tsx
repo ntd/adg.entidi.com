@@ -17,8 +17,9 @@ let current_slug: string
 
 const MenuLink = (props: MenuProps) =>
   <li>
-    <Link href={"/" + props.slug}>
-    <a className={(props.slug == current_slug ? 'active' : '')}>{props.title}</a></Link>
+    <Link href={"/" + props.slug} className={(props.slug == current_slug ? 'active' : '')}>
+      {props.title}
+    </Link>
   </li>
 
 const Adg = ({ Component, pageProps }: AppProps) => {
@@ -38,16 +39,17 @@ const Adg = ({ Component, pageProps }: AppProps) => {
           <div>
             <span>
               <button type="button" data-bs-toggle="collapse" data-bs-target="#Navigation" aria-controls="Navigation" aria-expanded="false" aria-label="Toggle navigation">
-                <span/>
               </button>
               <Link href="/">
-                <a>
-                  <img src="/img/adg-logo.png" alt="ADG canvs" width="48" height="48"/>
-                  <b>ADG cairo canvas</b>
-                </a>
+                <img src="/img/adg-logo.png" alt="ADG canvas" width="48" height="48"/>
+                <b>ADG cairo canvas</b>
               </Link>
             </span>
-            <span><a href="https://github.com/ntd/adg"><img src="/img/github.svg" alt="GitHub" width="32" height="32"/></a></span>
+            <span>
+              <Link href="https://github.com/ntd/adg">
+                <img src="/img/github.svg" alt="GitHub" width="32" height="32"/>
+              </Link>
+            </span>
           </div>
         </nav>
       </header>
@@ -74,10 +76,10 @@ const Adg = ({ Component, pageProps }: AppProps) => {
       </div>
       <footer>
         Developed by
-        <a href="https://www.entidi.com">
+        <Link href="https://www.entidi.com">
           <img src="/img/entidi.svg" alt="eNTiDi software" width="32" height="32"/>
           eNTiDi software
-        </a>
+        </Link>
         Licensed under LGPL 2.1+
       </footer>
     </div>
